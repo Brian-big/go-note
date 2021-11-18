@@ -31,6 +31,16 @@ func insertNote(c *gin.Context){
 	notes = append(notes, newNote)
 	c.IndentedJSON(http.StatusCreated, newNote)
 }
+func getNoteById(c *gin.Context){
+	id := c.Param("id")
+	for _, n := range notes{
+		if n.ID == id {
+			c.IndentedJSON(http.StatusOK, n)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "note note found"})
+}
 func setupRouter() *gin.Engine {
 
 	r := gin.Default()
@@ -42,6 +52,8 @@ func setupRouter() *gin.Engine {
 	r.GET("/notes", getAllNotes)
 
 	r.POST("/notes", insertNote)
+
+	r.GET("/notes/:id", getNoteById)
 
 	return r
 }
