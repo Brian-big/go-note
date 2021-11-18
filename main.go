@@ -22,6 +22,15 @@ var notes = []note{
 func getAllNotes(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, notes)
 }
+
+func insertNote(c *gin.Context){
+	var newNote note
+	if err := c.BindJSON(&newNote); err != nil{
+		return
+	}
+	notes = append(notes, newNote)
+	c.IndentedJSON(http.StatusCreated, newNote)
+}
 func setupRouter() *gin.Engine {
 
 	r := gin.Default()
@@ -31,6 +40,8 @@ func setupRouter() *gin.Engine {
 	})
 
 	r.GET("/notes", getAllNotes)
+
+	r.POST("/notes", insertNote)
 
 	return r
 }
