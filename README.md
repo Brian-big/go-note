@@ -7,3 +7,6 @@ make sure you have go installed
 ### dependancies
 
 - gin  `go get github.com/gin-gonic/gin`
+
+
+you should however note that the data is not persisted to any database
